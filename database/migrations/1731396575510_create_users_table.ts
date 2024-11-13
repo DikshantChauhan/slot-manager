@@ -1,3 +1,4 @@
+import { Role } from '../../app/models/user.js'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
@@ -9,7 +10,8 @@ export default class extends BaseSchema {
       table.string('full_name').nullable()
       table.string('email', 254).notNullable().unique()
       table.string('password').notNullable()
-
+      table.enum('role', Role).notNullable().defaultTo('student') // admin, student
+      table.integer('institute_id').references('institutes.id')
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
     })
