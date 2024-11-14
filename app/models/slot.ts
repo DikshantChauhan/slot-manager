@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, afterDelete } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Institute from './institute.js'
 import User from './user.js'
@@ -14,13 +14,11 @@ export default class Slot extends BaseModel {
   @column()
   declare userId: number
 
-  // minutes passed since midnight
   @column()
-  declare startTime: number
+  declare startTime: string
 
-  // minutes passed since midnight
   @column()
-  declare endTime: number
+  declare endTime: string
 
   @column()
   declare computerNumber: number
@@ -38,10 +36,10 @@ export default class Slot extends BaseModel {
   declare user: BelongsTo<typeof User>
 
   // delete entry after endtime passed
-  @afterDelete()
-  static async deleteAfterEndTimePassed(slot: Slot) {
-    if (slot.endTime < new Date().getTime()) {
-      await slot.delete()
-    }
-  }
+  // @afterDelete()
+  // static async deleteAfterEndTimePassed(slot: Slot) {
+  //   if (slot.endTime < new Date().getTime()) {
+  //     await slot.delete()
+  //   }
+  // }
 }

@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
+import Slot from './slot.js'
 
 export default class Institute extends BaseModel {
   @column({ isPrimary: true })
@@ -29,4 +30,7 @@ export default class Institute extends BaseModel {
 
   @hasMany(() => User)
   declare users: HasMany<typeof User>
+
+  @hasMany(() => Slot)
+  declare slots: HasMany<typeof Slot>
 }
