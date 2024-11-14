@@ -16,13 +16,6 @@ export default class extends BaseSeeder {
           instituteId: 1,
           userId: 1,
           computerNumber: 1,
-          startTime: getTime({ hour: 18, minute: 0 }), // 6pm
-          endTime: getTime({ hour: 18, minute: 30 }), // 6:30pm
-        },
-        {
-          instituteId: 1,
-          userId: 1,
-          computerNumber: 1,
           startTime: getTime({ day: 14, hour: 18, minute: 0 }), // 6pm
           endTime: getTime({ day: 1, hour: 18, minute: 30 }), // 6:30pm
         },
