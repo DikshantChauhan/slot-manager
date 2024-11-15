@@ -23,3 +23,4 @@ router.post('/me/slots/book', [SlotsController, 'bookSlot']).middleware(middlewa
 
 //institutes
 router.put('/institutes/edit', [InstitutesController, 'update']).middleware(middleware.admin())
+router.get('/me/institute', [InstitutesController, 'meInstitute']).middleware(middleware.auth())

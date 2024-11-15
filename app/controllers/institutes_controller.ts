@@ -2,6 +2,13 @@ import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 
 export default class InstitutesController {
+  async meInstitute({ response, auth }: HttpContext) {
+    const user = auth.getUserOrFail()
+    await user.preload('institute')
+
+    response.json(user.institute)
+  }
+
   async update({ request, response, auth }: HttpContext) {
     const { computerCount, openingTime, closingTime } = await request.validateUsing(
       vine.compile(

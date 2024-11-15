@@ -25,7 +25,6 @@ export default class AuthController {
 
   public async me({ auth, response }: HttpContext) {
     const user = auth.getUserOrFail()
-    await user.preload('institute')
     return response.json(user)
   }
 }
