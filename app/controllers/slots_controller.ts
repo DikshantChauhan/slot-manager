@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { getSQLDateTime } from '../../utils.js'
-import Institute from '#models/institute'
+import Slot from '#models/slot'
 
 const slotDurationInMinutes = 30
 
@@ -19,9 +19,6 @@ export default class SlotsController {
     const timestamp = new Date(date).getTime()
     const today = getSQLDateTime(timestamp)
     const nextDay = getSQLDateTime(timestamp + 24 * 60 * 60 * 1000)
-    console.log({ today, nextDay })
-    const log = await Institute.query().where('id', 1).preload('slots')
-    console.log(log)
 
     const user = auth.getUserOrFail()
     const slots = await user
@@ -89,12 +86,6 @@ export default class SlotsController {
 
     //check if timing valid for institute timings
     const institute = await student.related('institute').query().firstOrFail()
-    console.log({
-      openingTime: institute.openingTime,
-      closingTime: institute.closingTime,
-      startTimeInMinutes,
-      endTimeInMinutes,
-    })
     if (startTimeInMinutes < institute.openingTime && endTimeInMinutes > institute.closingTime) {
       return response.badRequest({ message: 'Pick timings suitable for institute' })
     }
@@ -110,9 +101,7 @@ export default class SlotsController {
     const sqlEndDate = getSQLDateTime(startDateTimestamp + slotDurationInMinutes * 60 * 1000)
 
     //check if slot already booked or overlapping
-    const conflictingSlots = await student
-      .related('slots')
-      .query()
+    const conflictingSlots = await Slot.query()
       .where('start_time', '=', sqlStartDate)
       .andWhere('end_time', '=', sqlEndDate)
       .andWhere('computer_number', computerNumber)
