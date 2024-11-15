@@ -41,6 +41,7 @@ export default class SlotsController {
       .related('slots')
       .query()
       .where('start_time', '>=', today)
+      /* .where('user_id', student.id) */
       .orderBy('start_time', 'asc')
 
     return response.json(slots)

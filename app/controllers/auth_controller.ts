@@ -13,8 +13,6 @@ export default class AuthController {
       )
     )
 
-    console.log(email, password)
-
     try {
       const user = await User.verifyCredentials(email, password)
       await auth.use('web').login(user)
@@ -27,6 +25,7 @@ export default class AuthController {
 
   public async me({ auth, response }: HttpContext) {
     const user = auth.getUserOrFail()
+    await user.preload('institute')
     return response.json(user)
   }
 }
